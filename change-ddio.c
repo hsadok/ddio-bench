@@ -144,11 +144,17 @@ void print_dev_info(struct pci_dev* dev) {
   printf("========================\n");
 }
 
-int main(void) {
+int main(int argc, const char** argv) {
   init_pci_access();
 
   /* Define nic_bus and ddio_state */
-  uint8_t nic_bus = 0x17, ddio_state = 0;
+  if (argc != 3) {
+    fprintf(stderr, "Usage: %s nic_bus ddio_state\n", argv[0]);
+    exit(1);
+  }
+
+  uint8_t nic_bus = atoi(argv[1]);
+  uint8_t ddio_state = atoi(argv[2]);
 
   struct pci_dev* dev = find_ddio_device(nic_bus);
   print_dev_info(dev);
