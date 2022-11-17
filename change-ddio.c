@@ -39,20 +39,17 @@ void init_pci_access(void) {
 struct pci_dev* find_ddio_device(uint8_t nic_bus) {
   struct pci_dev* dev;
   for (dev = pacc->devices; dev; dev = dev->next) {
-    pci_fill_info(dev, PCI_FILL_IDENT | PCI_FILL_BASES | PCI_FILL_NUMA_NODE |
-                           PCI_FILL_PHYS_SLOT);
+    pci_fill_info(dev, PCI_FILL_IDENT | PCI_FILL_BASES | PCI_FILL_PHYS_SLOT);
     /*
      * Find the proper PCIe root based on the nic device
      * For instance, if the NIC is located on 0000:17:00.0 (i.e., BDF)
      * 0x17 is the nic_bus (B)
      * 0x00 is the nic_device (D)
-     * 0x0	is the nic_function (F)
+     * 0x0  is the nic_function (F)
      * TODO: Fix this for Haswell, i.e., 03:00.0 -- Dev and Fun might be
      * different
      */
-    if (/*dev->func == 0 && dev->dev == 0  && */ pci_read_byte(
-            dev, PCI_SUBORDINATE_BUS) ==
-        nic_bus /*&& dev->numa_node==1 && dev->domain==0x10001*/) {
+    if (pci_read_byte(dev, PCI_SUBORDINATE_BUS) == nic_bus) {
       return dev;
     }
   }
