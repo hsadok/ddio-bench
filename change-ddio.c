@@ -153,7 +153,7 @@ int main(int argc, const char** argv) {
     exit(1);
   }
 
-  uint8_t nic_bus = atoi(argv[1]);
+  uint8_t nic_bus = strtoul(argv[1], NULL, 16);
   uint8_t ddio_state = atoi(argv[2]);
 
   struct pci_dev* dev = find_ddio_device(nic_bus);
