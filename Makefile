@@ -1,7 +1,7 @@
 CC = gcc
 LD = gcc
 CCFLAGS = -Wall -ansi -Wextra -O2 -g \
-	-I norman/api/linux -m64 -march=native -mavx -lpci
+	-I enso/api/linux -m64 -march=native -mavx -lpci
 LDFLAGS = -lpci -g -O2
 
 SRCS = change-ddio.c
